@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  app:
+    container_name: grav
+    build: ./.docker/app
+    command: "php -S 0.0.0.0:80 system/router.php"
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "80:80"
+    depends_on:
+      - composer
+
+  composer:
+    container_name: composer
+    build: ./.docker/composer
+    command: "composer install"
+    volumes:
+      - .:/app
+    working_dir: /app
